@@ -44,7 +44,8 @@ class exo2
             double sommePromo = 0;
             double nbNotePromo = 0;
 
-            double SommeGroupe = 0;
+            int groupe = 1;
+            double sommeGroupe = 0;
             double nbNoteGroupe = 0;
 
             Etudiant[] promotion = new Etudiant[NbEtu];
@@ -56,17 +57,34 @@ class exo2
 
                 promotion[i] = new Etudiant(temp[0], temp[1], int.Parse(temp[2]));
 
+                //ajout des notes et calcul de la moyenne de la promo
                 for (int j = 3; j < temp.Length; j++)
                 {
                     AjouterNote(ref promotion[i], double.Parse(temp[j].Replace(",", ".")));
 
                     sommePromo += double.Parse(temp[j].Replace(",", "."));
                     nbNotePromo++;
-    
                 }
+
+                //calcul de la moyenne par groupe
+                while (int.Parse(temp[2]) == groupe)
+                {
+                    for (int j = 3; j < temp.Length; j++)
+                    {
+                        sommeGroupe += double.Parse(temp[j].Replace(",", "."));
+                        nbNoteGroupe++;
+                    }
+
+                    Console.WriteLine($"\nLa moyenne du groupe {groupe} est : {sommeGroupe / nbNoteGroupe}");
+                    groupe++;
+                }
+
+
+
 
             }
 
+            //affichage du tableau d'etudiants
             foreach (Etudiant etu in promotion)
             {
                 AfficherEtudiant(etu);
